@@ -27,8 +27,8 @@ class Screensaver(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = models.FileField(
         upload_to="screensavers/final/%Y/",
-        verbose_name="Arquivo Final (PNG)",
-        help_text="Arquivo processado do screensaver em PNG"
+        verbose_name="Arquivo Final (BMP)",
+        help_text="Arquivo processado do screensaver em BMP 24-bit"
     )
     original_file = models.FileField(
         upload_to="screensavers/originals/%Y/",

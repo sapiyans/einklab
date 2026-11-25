@@ -17,7 +17,6 @@ MAX_DESC = 200
 MAX_TAGS = 12
 MAX_TAG_LEN = 20
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
-ALLOWED_CONTENT_TYPES = {"image/bmp", "image/png", "image/jpeg", "image/webp"}
 
 VALID_DEVICES = {c.value for c in Screensaver.Device}
 VALID_MODELS = {c.value for c in Screensaver.ModelName}
@@ -146,7 +145,7 @@ def create_screensaver(
         )
         ss.save()
 
-        ss.file.save(f"{ss.id}.png", file, save=False)
+        ss.file.save(f"{ss.id}.bmp", file, save=False)
 
         orig_ext = original_file.name.rsplit(".", 1)[-1].lower() if "." in original_file.name else "png"
         ss.original_file.save(f"{ss.id}_original.{orig_ext}", original_file, save=False)
