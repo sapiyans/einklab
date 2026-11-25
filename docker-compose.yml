@@ -1,8 +1,11 @@
+
 services:
   einklab:
     build:
       context: .
       dockerfile: Dockerfile
+      secrets:
+        - frontend_env
     image: einklab:latest
     pull_policy: build
     container_name: einklab
@@ -11,7 +14,7 @@ services:
 
     mem_limit: 384m
     cpus: 1.0
-    
+
     volumes:
       - /opt/docker/einklab/app/backend/.env.prod:/app/backend/.env.prod:ro
       - /opt/docker/einklab/media:/app/backend/media
@@ -30,6 +33,10 @@ services:
       - "traefik.http.routers.einklab.tls.domains[0].main=sapinon.com"
       - "traefik.http.routers.einklab.tls.domains[0].sans=www.sapinon.com,api.sapinon.com,screensaver.sapinon.com,firmware.sapinon.com,xteink.sapinon.com"
       - "traefik.http.services.einklab.loadbalancer.server.port=8000"
+
+secrets:
+  frontend_env:
+    file: /opt/docker/einklab/app/frontend/.env.prod
 
 networks:
   proxy:

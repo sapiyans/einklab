@@ -7,8 +7,8 @@ RUN npm ci --no-audit --no-fund
 
 COPY frontend/ ./
 
-ENV NODE_OPTIONS=--max-old-space-size=384
-RUN npm run build
+RUN --mount=type=secret,id=frontend_env,target=/build/frontend/.env.production \
+    npm run build
 
 
 FROM python:3.12-slim
