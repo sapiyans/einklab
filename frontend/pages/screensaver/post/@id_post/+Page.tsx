@@ -62,7 +62,10 @@ function ScreensaverDetailSkeleton() {
 
 export default function Page() {
   const pageContext = usePageContext();
-  const idPost = pageContext.routeParams.id_post;
+  const idPost =
+    typeof window === "undefined"
+      ? pageContext.routeParams.id_post
+      : window.location.pathname.replace(/\/+$/, "").split("/").pop()!;
 
   const [item, setItem] = useState<Screensaver | null>(null);
   const [loading, setLoading] = useState(true);
