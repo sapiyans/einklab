@@ -19,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import type { Screensaver } from "../types";
+import { galleryStore } from "../galleryStore";
 import { useScreensaverGallery } from "../hooks/useScreensaverGallery";
 import type { ScreensaverQuery } from "@/api/screensaver/screensavers";
 import { ImageUploadDialog } from "./ImageUploadDialog";
@@ -30,6 +31,7 @@ type Props = {
   initialFilters?: Omit<ScreensaverQuery, "page" | "search">;
   onClearFilters?: () => void;
   hideUpload?: boolean;
+  persist?: boolean;
 };
 
 export const MODEL_OPTIONS = [
@@ -141,10 +143,16 @@ export function ScreensaverGallery({
   initialFilters,
   onClearFilters,
   hideUpload,
+  persist = false,
 }: Props) {
   const [uploadOpen, setUploadOpen] = useState(false);
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const urlAtMountRef = useRef(
+    typeof window === "undefined"
+      ? ""
+      : window.location.pathname + window.location.search,
+  );
 
   const stableFilters = useMemo(
     () => initialFilters,
@@ -164,9 +172,55 @@ export function ScreensaverGallery({
     error,
     goToPage,
     refresh,
-  } = useScreensaverGallery({ initialFilters: stableFilters });
+    persistKey,
+    restoredScrollY,
+  } = useScreensaverGallery({ initialFilters: stableFilters, persist });
 
   const hasMore = page < totalPages;
+
+  useEffect(() => {
+    if (!persist || typeof window === "undefined") return;
+    const prev = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    return () => {
+      window.history.scrollRestoration = prev;
+    };
+  }, [persist]);
+
+  useEffect(() => {
+    if (!persist) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const current = window.location.pathname + window.location.search;
+        if (current !== urlAtMountRef.current) return;
+        galleryStore.save(persistKey, { scrollY: window.scrollY });
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [persist, persistKey]);
+
+  useEffect(() => {
+    if (restoredScrollY == null || restoredScrollY <= 0) return;
+    let raf = 0;
+    const startedAt = performance.now();
+    const tick = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max >= restoredScrollY - 1 || performance.now() - startedAt > 1500) {
+        window.scrollTo(0, Math.min(restoredScrollY, Math.max(0, max)));
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [restoredScrollY]);
 
   useEffect(() => {
     if (!isLoading) setHasLoadedOnce(true);
@@ -452,7 +506,12 @@ export function ScreensaverGallery({
             <button
               key={item.id}
               type="button"
-              onClick={() => onOpenScreensaver(item)}
+              onClick={() => {
+                if (persist) {
+                  galleryStore.save(persistKey, { scrollY: window.scrollY });
+                }
+                onOpenScreensaver(item);
+              }}
               className="group text-left focus:outline-none focus-visible:outline-none"
             >
               <div className="relative aspect-3/4 overflow-hidden rounded-xl bg-muted ring-1 ring-border/60 transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/70 group-hover:shadow-lg group-focus-visible:ring-2 group-focus-visible:ring-primary group-focus-visible:ring-offset-2 cursor-pointer">

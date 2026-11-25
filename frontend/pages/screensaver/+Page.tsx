@@ -50,6 +50,7 @@ export default function ScreensaverPage() {
           }}
           initialFilters={tag ? { tags: tag } : undefined}
           onClearFilters={() => navigate(links.xteink_screensavers)}
+          persist
         />
       </div>
     </div>
