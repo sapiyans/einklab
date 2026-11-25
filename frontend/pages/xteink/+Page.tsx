@@ -6,7 +6,7 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
-import { links } from "@/config/links";
+import { links, useLinks } from "@/config/links";
 import { FaGithub } from "react-icons/fa";
 
 type ServiceCard = {
@@ -18,24 +18,6 @@ type ServiceCard = {
   glow: string;
 };
 
-const services: ServiceCard[] = [
-  {
-    title: "Screensaver",
-    description: "Explore, crie e publique screensavers para o seu Xteink.",
-    href: links.screensaver,
-    icon: MonitorPlay,
-    gradient: "from-blue-500 via-indigo-500 to-violet-600",
-    glow: "group-hover:shadow-blue-500/40",
-  },
-  {
-    title: "Firmware",
-    description: "Baixe e instale a versão mais recente do firmware.",
-    href: links.firmware,
-    icon: Cpu,
-    gradient: "from-emerald-500 via-teal-500 to-cyan-600",
-    glow: "group-hover:shadow-emerald-500/40",
-  },
-];
 
 const socials = [
   { href: links.github, icon: FaGithub, label: "GitHub" },
@@ -44,6 +26,27 @@ const socials = [
 ];
 
 export default function Page() {
+  const nav = useLinks();
+
+  const services: ServiceCard[] = [
+    {
+      title: "Screensaver",
+      description: "Explore, crie e publique screensavers para o seu Xteink.",
+      href: nav.screensaver,
+      icon: MonitorPlay,
+      gradient: "from-blue-500 via-indigo-500 to-violet-600",
+      glow: "group-hover:shadow-blue-500/40",
+    },
+    {
+      title: "Firmware",
+      description: "Baixe e instale a versão mais recente do firmware.",
+      href: nav.firmware,
+      icon: Cpu,
+      gradient: "from-emerald-500 via-teal-500 to-cyan-600",
+      glow: "group-hover:shadow-emerald-500/40",
+    },
+  ];
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-neutral-950 text-white">
       {/* Background decorativo */}

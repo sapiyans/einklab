@@ -21,7 +21,7 @@ import {
 } from "./ScreensaverGallery";
 import { PreviewCard } from "./PreviewCard";
 import { navigate } from "vike/client/router";
-import { links } from "@/config/links";
+import { links, useLinks } from "@/config/links";
 import { countScreensaverDownload } from "@/api/screensaver/screensavers";
 
 type Props = {
@@ -37,6 +37,7 @@ export function ScreensaverDetail({
   onEdit,
   onOpenScreensaver,
 }: Props) {
+  const nav = useLinks();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloads, setDownloads] = useState(item.downloads);
   const [views, setViews] = useState(item.views);
@@ -108,7 +109,7 @@ export function ScreensaverDetail({
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => navigate(links.xteink_screensavers)}
+          onClick={() => navigate(nav.xteink_screensavers)}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Galeria

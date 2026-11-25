@@ -35,9 +35,10 @@ import {
   PublishModal,
 } from "../components";
 import { editorStore } from "../store";
-import { links } from "@/config/links";
+import { useLinks } from "@/config/links";
 
 export default function Page() {
+  const links = useLinks();
   const seed = editorStore.getState();
 
   const [imageSrc, setImageSrc] = useState<string | null>(seed.imageSrc);

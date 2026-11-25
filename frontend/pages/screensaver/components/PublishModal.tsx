@@ -20,7 +20,7 @@ import {
   DrawerFooter,
 } from "@/components/ui/drawer";
 import type { ExportFormat, ScreensaverMeta, Screensaver } from "../types";
-import { links } from "@/config/links";
+import { useLinks } from "@/config/links";
 
 type Props = {
   open: boolean;
@@ -181,9 +181,11 @@ export function PublishModal({
     }
   };
 
+  const nav = useLinks();
+
   const buildShareUrl = (id: string) => {
-    const path = links.xteink_screensaver_screensaver_post.replace(/\/+$/, "");
-    return `${window.location.origin}${path}/${id}`;
+    const path = nav.xteink_screensaver_screensaver_post.replace(/\/+$/, "");
+    return path.startsWith("/") ? `${window.location.origin}${path}/${id}` : `${path}/${id}`;
   };
 
   const handleGoToPost = () => {

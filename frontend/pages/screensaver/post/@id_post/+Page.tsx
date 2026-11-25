@@ -8,7 +8,7 @@ import {
 import { ScreensaverDetail } from "../../components";
 import { editorStore } from "../../store";
 import type { Screensaver } from "../../types";
-import { links } from "@/config/links";
+import { links, useLinks } from "@/config/links";
 
 function ScreensaverDetailSkeleton() {
   return (
@@ -109,6 +109,8 @@ export default function Page() {
     };
   }, [idPost]);
 
+  const nav = useLinks();
+
   const openEditorFromScreensaver = async (screensaver: Screensaver) => {
   // Usa o ORIGINAL se existir, senão o file final
   const caminho = screensaver.original_file || screensaver.file;
@@ -128,7 +130,7 @@ export default function Page() {
       orientation: screensaver.orientation as any,
       source: { kind: "screensaver", item: screensaver },
     });
-    navigate(links.xteink_screensaver_editor);
+    navigate(nav.xteink_screensaver_editor);
   };
   reader.readAsDataURL(blob);
 };
@@ -151,7 +153,7 @@ export default function Page() {
         <p>Post não encontrado</p>
         <button
           type="button"
-          onClick={() => navigate(links.screensaver)}
+          onClick={() => navigate(nav.screensaver)}
           className="rounded-md border px-4 py-2 text-sm hover:bg-accent"
         >
           Ver todos os screensavers
@@ -169,7 +171,7 @@ export default function Page() {
           onBack={() => window.history.back()}
           onEdit={() => openEditorFromScreensaver(item)}
           onOpenScreensaver={(next) =>
-            navigate(links.xteink_screensaver_screensaver_post + next.id)
+            navigate(nav.xteink_screensaver_screensaver_post + next.id)
           }
         />
       </div>

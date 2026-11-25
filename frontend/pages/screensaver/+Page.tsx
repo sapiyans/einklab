@@ -3,9 +3,10 @@ import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
 import { ScreensaverGallery } from "./components/ScreensaverGallery";
 import { editorStore } from "./store";
-import { links } from "../../src/config/links";
+import { useLinks } from "../../src/config/links";
 
 export default function ScreensaverPage() {
+  const links = useLinks();
   const pageContext = usePageContext();
   const tag = pageContext.urlParsed.search.tag;
 
