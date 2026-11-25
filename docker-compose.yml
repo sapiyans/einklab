@@ -26,12 +26,12 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.einklab.rule=Host(`sapiensin.com`) || Host(`www.sapiensin.com`) || Host(`api.sapiensin.com`) || Host(`screensaver.sapiensin.com`) || Host(`firmware.sapiensin.com`) || Host(`xteink.sapiensin.com`)"
+      - "traefik.http.routers.einklab.rule=Host(`sapinon.com`) || Host(`www.sapinon.com`) || Host(`api.sapinon.com`) || Host(`screensaver.sapinon.com`) || Host(`firmware.sapinon.com`) || Host(`xteink.sapinon.com`)"
       - "traefik.http.routers.einklab.entrypoints=websecure"
       - "traefik.http.routers.einklab.tls=true"
       - "traefik.http.routers.einklab.tls.certresolver=le"
-      - "traefik.http.routers.einklab.tls.domains[0].main=sapiensin.com"
-      - "traefik.http.routers.einklab.tls.domains[0].sans=www.sapiensin.com,api.sapiensin.com,screensaver.sapiensin.com,firmware.sapiensin.com,xteink.sapiensin.com"
+      - "traefik.http.routers.einklab.tls.domains[0].main=sapinon.com"
+      - "traefik.http.routers.einklab.tls.domains[0].sans=www.sapinon.com,api.sapinon.com,screensaver.sapinon.com,firmware.sapinon.com,xteink.sapinon.com"
       - "traefik.http.services.einklab.loadbalancer.server.port=8000"
 
 networks:
