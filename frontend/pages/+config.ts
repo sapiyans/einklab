@@ -1,13 +1,17 @@
 import type { Config } from "vike/types";
 import vikeReact from "vike-react/config";
 
-// Default config (can be overridden by pages)
-// https://vike.dev/config
+const isProduction = process.env.NODE_ENV === "production";
+const baseAssets = isProduction ? "/static/" : undefined;
 
 const config: Config = {
-  // https://vike.dev/head-tags
-  title: "My Vike App",
-  description: "Demo showcasing Vike",
+  // https://vike.dev/prerender
+  prerender: true,
+  baseAssets,
+
+  title: "E-InkLab",
+  description:
+    "Ferramentas para dispositivos E-Ink XTEINK: editor de screensavers e pesquisa de firmware.",
 
   extends: [vikeReact],
 };

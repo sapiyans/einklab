@@ -1,0 +1,478 @@
+{
+  "original": {
+    "meta": { "name": "Original", "eyebrow": "FÁBRICA", "accent": "amber" },
+    "summary": "Simples, estável e pronto para usar.",
+    "features": [
+      {
+        "number": "01",
+        "title": "Leitura",
+        "icon": "BookOpen",
+        "rows": [
+          ["EPUB", "yes"],
+          ["TXT", "yes"],
+          ["MOBI", "yes"],
+          ["Ir para porcentagem", "yes"],
+          ["Índice / capítulos", { "status": "limited", "note": "Clicar não funciona, apenas menu" }],
+          ["Notas de rodapé", "no"],
+          ["Retorno rápido de notas de rodapé", "no"],
+          ["Marcadores", "yes"],
+          ["Seleção de texto", "no"],
+          ["Leitura Focada", "no"],
+          ["Pontos de guia", "no"],
+          ["Virada automática (ppm)", "no"],
+          ["Orientação de leitura", "yes"],
+          ["Ajuste de brilho", "yes"],
+          ["Luz frontal", "yes"],
+          ["Dicionário", "no"],
+          ["Múltiplos dicionários", "no"],
+          ["Histórico do dicionário", "no"],
+          ["Tradução", "no"],
+          ["Capturar tela", "no"],
+          ["Mostrar página como QR", "no"],
+          ["Trechos salvos", "no"],
+          ["Estilo do menu do leitor", "no"],
+          ["Customizar barra de status", "no"]
+        ]
+      },
+      {
+        "number": "02",
+        "title": "Tipografia",
+        "icon": "Type",
+        "rows": [
+          ["Fontes personalizadas", "yes"],
+          ["Importar fontes", "yes"],
+          ["Gerenciar fontes", "yes"],
+          ["Tamanho da fonte", "limited"],
+          ["Peso da fonte", "limited"],
+          ["Espaçamento entre linhas", "limited"],
+          ["Espaçamento entre palavras", "limited"],
+          ["Espaçamento entre caracteres", "no"],
+          ["Espaço de parágrafo extra", "no"],
+          ["Margens personalizadas", "yes"],
+          ["Alinhamento do texto", "limited"],
+          ["Justificação", "yes"],
+          ["Hifenização", "limited"],
+          ["Controle de indentação", "limited"],
+          ["Suavização de texto", "unknown"],
+          ["Estilo embutido", "unknown"]
+        ]
+      },
+      {
+        "number": "03",
+        "title": "Estatísticas de leitura",
+        "icon": "ChartBar",
+        "rows": [
+          ["Status de leitura", "no"],
+          ["Tempo de leitura", "limited"],
+          ["Livros lidos", "unknown"],
+          ["Sequência de leitura", "no"],
+          ["Média diária", "no"],
+          ["Tempo restante", "no"],
+          ["Estatísticas por livro", "no"],
+          ["Estatísticas gerais", "no"],
+          ["Histórico de leitura", "no"],
+          ["Sincronizar progresso", "no"]
+        ]
+      },
+      {
+        "number": "04",
+        "title": "Conectividade",
+        "icon": "Wifi",
+        "rows": [
+          ["Wi-Fi", "yes"],
+          ["Transferência via Wi-Fi", { "status": "limited", "note": "não consegui" }],
+          ["Gere. Arqui. Web", "no"],
+          ["OPDS", "no"],
+          ["Múltiplos servidores OPDS", "no"],
+          ["Calibre Wireless", "no"],
+          ["Sinc. KOReader", "no"],
+          ["Bluetooth", "limited"],
+          ["USB", "yes"]
+        ]
+      },
+      {
+        "number": "05",
+        "title": "Interface",
+        "icon": "Monitor",
+        "rows": [
+          ["Lista de livros", "no"],
+          ["Carrossel", "no"],
+          ["Pesquisa de livros", "no"],
+          ["Filtros (Recentes/Título/Autor)", "no"],
+          ["Ordenação", "no"],
+          ["Pastas", "yes"],
+          ["Biblioteca", "no"],
+          ["Modo noturno", { "status": "limited", "note": "leitura" }],
+          ["Interface personalizada", "no"],
+          ["Relógio", "yes"],
+          ["Porcentagem da bateria", "yes"],
+          ["Ocultar % da bateria", "no"],
+          ["Layouts de teclado", "no"],
+          ["Idioma", { "status": "limited", "note": "Sem pt-br" }],
+          ["Renomear arquivos", "unknown"],
+          ["Excluir arquivos", "unknown"],
+          ["Mostrar arquivos ocultos", "no"],
+          ["Usar metadados dos livros", "no"]
+        ]
+      },
+      {
+        "number": "06",
+        "title": "Sleep Screen / Screensaver",
+        "icon": "Moon",
+        "rows": [
+          ["Sleep Screen", "yes"],
+          ["Imagem personalizada", { "status": "limited", "note": "apenas 1" }],
+          ["Sleep Screen transparente", "no"],
+          ["Capa do livro", "yes"],
+          ["Tela de repouso (Escuro)", "no"],
+          ["Modo capa tela repouso", "no"],
+          ["Filtro capa tela repouso", "no"],
+          ["Retomada rápida após tempo limite", "no"],
+          ["Restaurar iluminação ao despertar", "no"],
+          ["Frequência atualização", { "status": "limited", "note": "Pouco intuitivo" }]
+        ]
+      },
+      {
+        "number": "07",
+        "title": "Atualizações",
+        "icon": "RefreshCw",
+        "rows": [
+          ["OTA (Verificar atualizações)", "yes"],
+          ["Atualização por USB", "no"],
+          ["Atualização por SD", "no"],
+          ["Atualização de firmware via cartão SD", "no"],
+          ["Downgrade", "no"],
+          ["Backup antes da atualização", "unknown"],
+          ["Changelog", "unknown"],
+          ["Atualizações frequentes", "unknown"],
+          ["Comunidade ativa", "no"]
+        ]
+      },
+      {
+        "number": "08",
+        "title": "Controles",
+        "icon": "Gamepad2",
+        "rows": [
+          ["Configuração dos botões", "yes"],
+          ["Atalhos personalizados", { "status": "limited", "note": "Poucas opções" }],
+          ["Gestos", "no"],
+          ["Swipe (Apenas deslizar)", "yes"],
+          ["Zonas de toque", "yes"],
+          ["Gestos do botão Início", { "status": "limited", "note": "Poucas opções" }],
+          ["Mostrar menu do leitor", "yes"],
+          ["Comportamento Pressionar e segurar", "no"]
+        ]
+      },
+      {
+        "number": "09",
+        "title": "Personalização",
+        "icon": "Palette",
+        "rows": [
+          ["Personalizar interface", "no"],
+          ["Personalizar fontes", { "status": "limited", "note": "Poucas opções" }],
+          ["Personalizar gestos", "no"],
+          ["Personalizar Sleep Screen", { "status": "limited", "note": "Poucas opções" }],
+          ["Temas (Lyra, Clássico, etc)", "no"],
+          ["Limpar cache de leitura", "unknown"],
+          ["Excluir cache do livro", "unknown"]
+        ]
+      },
+      {
+        "number": "10",
+        "title": "Sistema",
+        "icon": "Settings",
+        "rows": [
+          ["Senha (boot)", "yes"],
+          ["Tempo para repousar", "no"],
+          ["Limpar livros lidos da lista de recentes", "no"],
+          ["Mover livros lidos para pasta Read", "no"],
+          ["Sincronização KOReader", "no"],
+          ["Servidores OPDS", "no"]
+        ]
+      }
+    ],
+    "ratingSections": [
+      {
+        "number": "11",
+        "title": "Estabilidade",
+        "icon": "Shield",
+        "warning": false,
+        "rows": [
+          ["Estabilidade geral", 4],
+          ["Travamentos", 4],
+          ["Bugs", 4],
+          ["Velocidade da interface", 4],
+          ["Tempo de inicialização", 4],
+          ["Confiabilidade", 5]
+        ]
+      },
+      {
+        "number": "12",
+        "title": "Desempenho",
+        "icon": "Zap",
+        "warning": false,
+        "rows": [
+          ["Abertura de livros", 5],
+          ["Troca de páginas", 4],
+          ["Navegação", 3],
+          ["Biblioteca", 2],
+          ["Consumo de RAM", 3],
+          ["Consumo de bateria", 4]
+        ]
+      },
+      {
+        "number": "13",
+        "title": "Experiência do usuário",
+        "icon": "Sparkles",
+        "warning": false,
+        "rows": [
+          ["Facilidade de uso", 4],
+          ["Interface", 2],
+          ["Configuração inicial", 4],
+          ["Personalização", 1],
+          ["Recursos avançados", 2],
+          ["Para iniciantes", 4],
+          ["Para usuários avançados", 2]
+        ]
+      }
+    ]
+  },
+  "crosspoint": {
+    "meta": { "name": "CrossPoint", "eyebrow": "COMUNIDADE", "accent": "blue" },
+    "summary": "Mais recursos para quem quer ir além.",
+    "features": [
+      {
+        "number": "01",
+        "title": "Leitura",
+        "icon": "BookOpen",
+        "rows": [
+          ["EPUB", "yes"],
+          ["TXT", "yes"],
+          ["MOBI", "no"],
+          ["Ir para porcentagem", "yes"],
+          ["Índice / capítulos", "yes"],
+          ["Notas de rodapé", "yes"],
+          ["Retorno rápido de notas de rodapé", "yes"],
+          ["Marcadores", "yes"],
+          ["Seleção de texto", "no"],
+          ["Leitura Focada", "yes"],
+          ["Pontos de guia", "no"],
+          ["Virada automática (ppm)", "yes"],
+          ["Orientação de leitura", "yes"],
+          ["Ajuste de brilho", "yes"],
+          ["Luz frontal", "yes"],
+          ["Dicionário", "yes"],
+          ["Múltiplos dicionários", "yes"],
+          ["Histórico do dicionário", "no"],
+          ["Tradução", "yes"],
+          ["Capturar tela", "yes"],
+          ["Mostrar página como QR", "yes"],
+          ["Trechos salvos", "no"],
+          ["Estilo do menu do leitor", "yes"],
+          ["Customizar barra de status", "yes"]
+        ]
+      },
+      {
+        "number": "02",
+        "title": "Tipografia",
+        "icon": "Type",
+        "rows": [
+          ["Fontes personalizadas", "yes"],
+          ["Importar fontes", "yes"],
+          ["Gerenciar fontes", "yes"],
+          ["Tamanho da fonte", "yes"],
+          ["Peso da fonte", "yes"],
+          ["Espaçamento entre linhas", "yes"],
+          ["Espaçamento entre palavras", "yes"],
+          ["Espaçamento entre caracteres", "yes"],
+          ["Espaço de parágrafo extra", "yes"],
+          ["Margens personalizadas", "yes"],
+          ["Alinhamento do texto", "yes"],
+          ["Justificação", "yes"],
+          ["Hifenização", "yes"],
+          ["Controle de indentação", "yes"],
+          ["Suavização de texto", "yes"],
+          ["Estilo embutido", "yes"]
+        ]
+      },
+      {
+        "number": "03",
+        "title": "Estatísticas de leitura",
+        "icon": "ChartBar",
+        "rows": [
+          ["Status de leitura", "no"],
+          ["Tempo de leitura", "no"],
+          ["Livros lidos", "yes"],
+          ["Sequência de leitura", "no"],
+          ["Média diária", "no"],
+          ["Tempo restante", "no"],
+          ["Estatísticas por livro", "no"],
+          ["Estatísticas gerais", "no"],
+          ["Histórico de leitura", "no"],
+          ["Sincronizar progresso", "limited"]
+        ]
+      },
+      {
+        "number": "04",
+        "title": "Conectividade",
+        "icon": "Wifi",
+        "rows": [
+          ["Wi-Fi", "yes"],
+          ["Transferência via Wi-Fi", "yes"],
+          ["Gere. Arqui. Web", "yes"],
+          ["OPDS", "yes"],
+          ["Múltiplos servidores OPDS", "yes"],
+          ["Calibre Wireless", "yes"],
+          ["Sinc. KOReader", "yes"],
+          ["Bluetooth", "no"],
+          ["USB", "yes"]
+        ]
+      },
+      {
+        "number": "05",
+        "title": "Interface",
+        "icon": "Monitor",
+        "rows": [
+          ["Lista de livros", "yes"],
+          ["Carrossel", "no"],
+          ["Pesquisa de livros", "no"],
+          ["Filtros (Recentes/Título/Autor)", "yes"],
+          ["Ordenação", "yes"],
+          ["Pastas", "yes"],
+          ["Biblioteca", "yes"],
+          ["Modo noturno", "yes"],
+          ["Interface personalizada", "yes"],
+          ["Relógio", "yes"],
+          ["Porcentagem da bateria", "yes"],
+          ["Ocultar % da bateria", "no"],
+          ["Layouts de teclado", { "status": "limited", "note": "falta abnt2" }],
+          ["Idioma", "yes"],
+          ["Renomear arquivos", "yes"],
+          ["Excluir arquivos", "yes"],
+          ["Mostrar arquivos ocultos", "yes"],
+          ["Usar metadados dos livros", "yes"]
+        ]
+      },
+      {
+        "number": "06",
+        "title": "Sleep Screen / Screensaver",
+        "icon": "Moon",
+        "rows": [
+          ["Sleep Screen", "yes"],
+          ["Imagem personalizada", "yes"],
+          ["Sleep Screen transparente", "yes"],
+          ["Capa do livro", "yes"],
+          ["Tela de repouso (Escuro)", "yes"],
+          ["Modo capa tela repouso", "yes"],
+          ["Filtro capa tela repouso", "yes"],
+          ["Retomada rápida após tempo limite", "yes"],
+          ["Restaurar iluminação ao despertar", "yes"],
+          ["Frequência atualização", "yes"]
+        ]
+      },
+      {
+        "number": "07",
+        "title": "Atualizações",
+        "icon": "RefreshCw",
+        "rows": [
+          ["OTA (Verificar atualizações)", "yes"],
+          ["Atualização por USB", "yes"],
+          ["Atualização por SD", "yes"],
+          ["Atualização de firmware via cartão SD", "yes"],
+          ["Downgrade", "yes"],
+          ["Backup antes da atualização", "unknown"],
+          ["Changelog", "yes"],
+          ["Atualizações frequentes", "yes"],
+          ["Comunidade ativa", "yes"]
+        ]
+      },
+      {
+        "number": "08",
+        "title": "Controles",
+        "icon": "Gamepad2",
+        "rows": [
+          ["Configuração dos botões", "yes"],
+          ["Atalhos personalizados", "yes"],
+          ["Gestos", "yes"],
+          ["Swipe (Apenas deslizar)", "yes"],
+          ["Zonas de toque", "no"],
+          ["Gestos do botão Início", "yes"],
+          ["Mostrar menu do leitor", "yes"],
+          ["Comportamento Pressionar e segurar", "no"]
+        ]
+      },
+      {
+        "number": "09",
+        "title": "Personalização",
+        "icon": "Palette",
+        "rows": [
+          ["Personalizar interface", "yes"],
+          ["Personalizar fontes", "yes"],
+          ["Personalizar gestos", "yes"],
+          ["Personalizar Sleep Screen", "yes"],
+          ["Temas (Lyra, Clássico, etc)", { "status": "limited", "note": "Poucas opções" }],
+          ["Limpar cache de leitura", "yes"],
+          ["Excluir cache do livro", "yes"]
+        ]
+      },
+      {
+        "number": "10",
+        "title": "Sistema",
+        "icon": "Settings",
+        "rows": [
+          ["Senha (boot)", "no"],
+          ["Tempo para repousar", "yes"],
+          ["Limpar livros lidos da lista de recentes", "yes"],
+          ["Mover livros lidos para pasta Read", "yes"],
+          ["Sincronização KOReader", "yes"],
+          ["Servidores OPDS", "yes"]
+        ]
+      }
+    ],
+    "ratingSections": [
+      {
+        "number": "11",
+        "title": "Estabilidade",
+        "icon": "Shield",
+        "warning": true,
+        "rows": [
+          ["Estabilidade geral", 4],
+          ["Travamentos", 4],
+          ["Bugs", 3],
+          ["Velocidade da interface", 4],
+          ["Tempo de inicialização", 4],
+          ["Confiabilidade", 4]
+        ]
+      },
+      {
+        "number": "12",
+        "title": "Desempenho",
+        "icon": "Zap",
+        "warning": false,
+        "rows": [
+          ["Abertura de livros", 4],
+          ["Troca de páginas", 4],
+          ["Navegação", 4],
+          ["Biblioteca", 4],
+          ["Consumo de RAM", 4],
+          ["Consumo de bateria", 5]
+        ]
+      },
+      {
+        "number": "13",
+        "title": "Experiência do usuário",
+        "icon": "Sparkles",
+        "warning": false,
+        "rows": [
+          ["Facilidade de uso", 4],
+          ["Interface", 4],
+          ["Configuração inicial", 4],
+          ["Personalização", 4],
+          ["Recursos avançados", 4],
+          ["Para iniciantes", 4],
+          ["Para usuários avançados", 4]
+        ]
+      }
+    ]
+  }
+}

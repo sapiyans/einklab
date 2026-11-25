@@ -1,67 +1,51 @@
-Generated with [vike.dev/new](https://vike.dev/new) ([version 697](https://www.npmjs.com/package/create-vike/v/0.0.697)) using this command:
+# E-InkLab — Frontend
+
+App [Vike](https://vike.dev) + React + Tailwind CSS v4 para o toolkit E-InkLab.
+
+## Páginas
+
+| Rota | Descrição |
+| --- | --- |
+| `/` e `/xteink` | Landing com os serviços |
+| `/screensaver` | Galeria de screensavers da comunidade |
+| `/screensaver/editor` | Editor de screensaver (corte, ajustes, export BMP/PNG) |
+| `/screensaver/post/:id` | Detalhe de um screensaver |
+| `/firmware` | Comparativo de firmwares XTEINK |
+
+## Rodando
 
 ```sh
-npm create vike@latest --- --react
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # gera dist/client + dist/server
+npm run preview
 ```
 
-## Contents
+O backend Django deve estar em `http://127.0.0.1:8010` (veja
+[`../backend/README.md`](../backend/README.md)).
 
-- [Vike](#vike)
-  - [Plus files](#plus-files)
-  - [Routing](#routing)
-  - [SSR](#ssr)
-  - [HTML Streaming](#html-streaming)
+## Variáveis de ambiente
 
-## Vike
+Os valores ficam em `.env.development` (dev) e `.env.production` (build).
+Copie `.env.example` se precisar recriar.
 
-This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
+| Variável | Descrição |
+| --- | --- |
+| `VITE_HOST_API` | Origem do backend (API e `/media`). Ex.: `http://127.0.0.1:8010/` |
+| `VITE_SITE_URL` | Origem pública do site, usada em URL absoluta de SEO/Open Graph |
+| `VITE_STATIC_URL` | Prefixo das imagens estáticas |
+| `BASE_PATH` | `base` do Vite (`/` em dev, `/static/` no build) |
+| `DEV_HOST` / `DEV_PORT` / `PREVIEW_PORT` | Servidor de dev/preview |
+| `API_PROXY_TARGET` | Destino do proxy `/api`, `/admin` e `/media` |
 
-### Plus files
+Apenas variáveis com prefixo `VITE_` chegam ao navegador — nunca coloque
+segredos nelas.
 
-[The + files are the interface](https://vike.dev/config) between Vike and your code.
+## Estrutura
 
-- [`+config.ts`](https://vike.dev/settings) — Settings (e.g. `<title>`)
-- [`+Page.tsx`](https://vike.dev/Page) — The `<Page>` component
-- [`+data.ts`](https://vike.dev/data) — Fetching data (for your `<Page>` component)
-- [`+Layout.tsx`](https://vike.dev/Layout) — The `<Layout>` component (wraps your `<Page>` components)
-- [`+Head.tsx`](https://vike.dev/Head) - Sets `<head>` tags
-- [`/pages/_error/+Page.tsx`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
-- [`+onPageTransitionStart.ts`](https://vike.dev/onPageTransitionStart) and `+onPageTransitionEnd.ts` — For page transition animations
-
-### Routing
-
-[Vike's built-in router](https://vike.dev/routing) lets you choose between:
-
-- [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its `+Page.jsx` file is located on the filesystem)
-- [Route Strings](https://vike.dev/route-string)
-- [Route Functions](https://vike.dev/route-function)
-
-### SSR
-
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or specific pages.
-
-### HTML Streaming
-
-You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.
-
-
-### Environment variables
-
-The Vite config reads variables from `.env` files (see [`.env.example`](.env.example)):
-
-- `.env.development` — used by `npm run dev`
-- `.env.production` — used by `npm run build` / `npm run preview`
-- `.env.local` — personal overrides, **not** committed (highest priority)
-
-Only variables prefixed with `VITE_` are exposed to the browser (via
-`import.meta.env`); everything else is available only inside `vite.config.ts`
-— never put secrets in `VITE_*` variables, they end up in the bundle.
-
-| Variable | Where | Description |
-| --- | --- | --- |
-| `VITE_HOST_API` | client | Backend API base URL |
-| `VITE_STATIC_URL` | client | Prefix where static images are served |
-| `BASE_PATH` | config | App base path (default: `/static/` on build, `/` on dev) |
-| `DEV_HOST` / `DEV_PORT` | config | Dev server host/port (default `localhost:3000`) |
-| `PREVIEW_PORT` | config | `vike preview` port (default `4173`) |
-| `API_PROXY_TARGET` | config | Proxy target for `/api` and `/admin` in dev |
+- `pages/` — rotas (arquivos `+Page`, `+Head`, `+Layout` do Vike)
+- `src/api/` — cliente axios e endpoints da API
+- `src/components/ui/` — componentes shadcn/ui (Tailwind v4)
+- `src/config/links.ts` — URLs e rotas usadas pelo app
+- `src/layouts/globals.css` — tema e tokens de design
+- `src/images/xteink/` — mockups dos dispositivos X3/X4/X4 Pro
