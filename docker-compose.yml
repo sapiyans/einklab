@@ -11,10 +11,7 @@ services:
 
     mem_limit: 384m
     cpus: 1.0
-
-    env_file:
-      - /opt/docker/einklab/app/backend/.env.prod
-
+    
     volumes:
       - /opt/docker/einklab/app/backend/.env.prod:/app/backend/.env.prod:ro
       - /opt/docker/einklab/media:/app/backend/media
