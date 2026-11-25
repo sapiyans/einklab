@@ -8,7 +8,6 @@ import { DEFAULT_ADJ, MODELS } from "../constants";
 import {
   Adjustments,
   DeviceColor,
-  ExportFormat,
   ModelOption,
   Orientation,
   ScreenBox,
@@ -276,36 +275,6 @@ export default function Page() {
     return canvasToBmp24Bit(canvas);
   };
 
-  // Nova função para gerar a imagem processada em PNG (assíncrona)
-  const buildPngBlob = (): Promise<Blob | null> => {
-    return new Promise((resolve) => {
-      const img = imgRef.current;
-      if (!img || !completedCrop?.width || !completedCrop?.height) return resolve(null);
-      const scaleX = img.naturalWidth / img.width;
-      const scaleY = img.naturalHeight / img.height;
-      const canvas = document.createElement("canvas");
-      canvas.width = outW;
-      canvas.height = outH;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return resolve(null);
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      // E-ink não tem transparência: garante fundo branco no PNG
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, outW, outH);
-      ctx.filter = buildFilter(adj);
-      ctx.drawImage(
-        img,
-        completedCrop.x * scaleX,
-        completedCrop.y * scaleY,
-        completedCrop.width * scaleX,
-        completedCrop.height * scaleY,
-        0, 0, outW, outH
-      );
-      canvas.toBlob((blob) => resolve(blob), "image/png");
-    });
-  };
-
   // Função para pegar o blob original (do upload ou cache da imagem store)
   const getOriginalBlob = async (): Promise<Blob | null> => {
     if (originalFileRef.current) return originalFileRef.current;
@@ -351,29 +320,25 @@ export default function Page() {
     return () => clearTimeout(t);
   }, [generatePreview]);
 
-  // Download do usuário: BMP (firmware original) ou PNG (CrossPoint e forks)
-  const handleActualDownload = async (format: ExportFormat) => {
-    const blob = format === "png" ? await buildPngBlob() : buildBmpBlob();
+  const handleActualDownload = () => {
+    const blob = buildBmpBlob();
     if (!blob) return;
-    downloadBlob(
-      blob,
-      `xteink-${model}-${deviceColor}-${orientation}-${outW}x${outH}.${format}`
-    );
+    downloadBlob(blob, `xteink-${model}-${deviceColor}-${orientation}-${outW}x${outH}.bmp`);
   };
 
   const handleDownloadClick = () => setPublishOpen(true);
 
-  // Publish: Envia os dois arquivos (PNG final e Arquivo original)
+  // Publish: envia o BMP final e o arquivo original
   const handlePublish = async (meta: ScreensaverMeta): Promise<Screensaver | null> => {
-    const finalPngBlob = await buildPngBlob();
+    const finalBlob = buildBmpBlob();
     const originalBlob = await getOriginalBlob();
 
-    if (!finalPngBlob || !originalBlob) {
+    if (!finalBlob || !originalBlob) {
       console.error("Imagens não estão prontas para publicação.");
       return null;
     }
 
-    return publish(finalPngBlob, originalBlob, meta, { model, color: deviceColor, orientation });
+    return publish(finalBlob, originalBlob, meta, { model, color: deviceColor, orientation });
   };
 
   const handleReset = () => {
@@ -400,6 +365,16 @@ export default function Page() {
     navigate(links.xteink_screensavers);
   };
 
+  const handleBack = () => {
+    const source = editorStore.getState().editSource;
+    editorStore.reset();
+    if (source.kind === "screensaver") {
+      navigate(links.xteink_screensaver_screensaver_post + source.item.id);
+      return;
+    }
+    navigate(links.xteink_screensavers);
+  };
+
   if (!imageSrc) {
     return <div className="flex items-center justify-center py-16 text-muted-foreground">Carregando imagem...</div>;
   }
@@ -413,9 +388,9 @@ export default function Page() {
 
         <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
 
-        <Button variant="ghost" onClick={backToGallery}>
+        <Button variant="ghost" onClick={handleBack}>
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Voltar para a galeria
+          Voltar
         </Button>
 
         <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">

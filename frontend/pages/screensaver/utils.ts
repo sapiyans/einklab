@@ -101,24 +101,9 @@ export const canvasToBmp24Bit = (canvas: HTMLCanvasElement): Blob => {
   return new Blob([buffer], { type: "image/bmp" });
 };
 
-export const canvasToPngBlob = (canvas: HTMLCanvasElement): Promise<Blob> =>
-  new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (blob) resolve(blob);
-        else reject(new Error("Falha ao gerar PNG"));
-      },
-      "image/png"
-    );
-  });
-
 /** Converte um HTMLImageElement carregado para BMP 24-bit real. */
 export const imageToBmpBlob = (img: HTMLImageElement): Blob =>
   canvasToBmp24Bit(drawImageToCanvas(img));
-
-/** Converte um HTMLImageElement carregado para PNG. */
-export const imageToPngBlob = (img: HTMLImageElement): Promise<Blob> =>
-  canvasToPngBlob(drawImageToCanvas(img));
 
 export const downloadBlob = (blob: Blob, filename: string) => {
   const url = URL.createObjectURL(blob);

@@ -10,7 +10,7 @@ export function useScreensavers() {
 
   const publish = useCallback(
     async (
-      finalBlob: Blob,        // PNG do recorte final
+      finalBlob: Blob,        // BMP do recorte final
       originalBlob: Blob,     // Arquivo original
       meta: ScreensaverMeta,
       deviceMeta: { model: string; color: string; orientation: string }
@@ -21,7 +21,7 @@ export function useScreensavers() {
       try {
         const formData = new FormData();
         
-        formData.append("file", finalBlob, "screensaver.png");
+        formData.append("file", finalBlob, "screensaver.bmp");
         
         const originalName = originalBlob instanceof File ? originalBlob.name : "original.png";
         formData.append("original_file", originalBlob, originalName);

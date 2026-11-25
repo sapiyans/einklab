@@ -19,7 +19,7 @@ import {
   DrawerDescription,
   DrawerFooter,
 } from "@/components/ui/drawer";
-import type { ExportFormat, ScreensaverMeta, Screensaver } from "../types";
+import type { ScreensaverMeta, Screensaver } from "../types";
 import { useLinks } from "@/config/links";
 
 type Props = {
@@ -29,50 +29,8 @@ type Props = {
   isPublishing: boolean;
   error: string | null;
   onPublish: (meta: ScreensaverMeta) => Promise<Screensaver | null>;
-  onDownload: (format: ExportFormat) => void;
+  onDownload: () => void;
 };
-
-const FORMAT_OPTIONS: {
-  value: ExportFormat;
-  label: string;
-  hint: string;
-}[] = [
-  { value: "bmp", label: "BMP", hint: "Firmware original e CrossPoint" },
-  { value: "png", label: "PNG", hint: "Overlay e forks (CrossInk)" },
-];
-
-function FormatPicker({
-  value,
-  onChange,
-}: {
-  value: ExportFormat;
-  onChange: (format: ExportFormat) => void;
-}) {
-  return (
-    <div className="w-full flex items-center justify-between gap-3 rounded-lg border border-border p-2.5">
-      <div className="text-left">
-        <p className="text-sm font-medium leading-tight">Formato do arquivo</p>
-        <p className="text-[11px] text-muted-foreground">
-          BMP no firmware original • PNG para overlay e forks
-        </p>
-      </div>
-      <div className="flex gap-1 shrink-0">
-        {FORMAT_OPTIONS.map((o) => (
-          <Button
-            key={o.value}
-            type="button"
-            size="xs"
-            variant={value === o.value ? "default" : "outline"}
-            onClick={() => onChange(o.value)}
-            title={o.hint}
-          >
-            {o.label}
-          </Button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const MAX_NAME = 60;
 const MAX_AUTHOR = 30;
@@ -110,7 +68,6 @@ export function PublishModal({
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagWarning, setTagWarning] = useState<string | null>(null);
-  const [format, setFormat] = useState<ExportFormat>("bmp");
   const [published, setPublished] = useState(false);
   const [created, setCreated] = useState<Screensaver | null>(null);
   const [copied, setCopied] = useState(false);
@@ -274,7 +231,6 @@ export function PublishModal({
               </div>
 
               <div className="w-full space-y-2">
-                <FormatPicker value={format} onChange={setFormat} />
                 <Button className="w-full" onClick={handleGoToPost}>
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Ver publicação
@@ -282,10 +238,10 @@ export function PublishModal({
                 <Button
                   variant="outline"
                   className="w-full"
-                  onClick={() => onDownload(format)}
+                  onClick={onDownload}
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Baixar {format.toUpperCase()} agora
+                  Baixar BMP agora
                 </Button>
                 <Button
                   variant="ghost"
@@ -502,16 +458,14 @@ export function PublishModal({
                   )}
                 </Button>
 
-                <FormatPicker value={format} onChange={setFormat} />
-
                 <Button
                   variant="ghost"
                   className="w-full"
-                  onClick={() => onDownload(format)}
+                  onClick={onDownload}
                   disabled={!previewUrl}
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Baixar {format.toUpperCase()} sem publicar
+                  Baixar BMP sem publicar
                 </Button>
               </DrawerFooter>
             </>

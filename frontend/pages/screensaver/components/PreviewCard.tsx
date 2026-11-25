@@ -1,22 +1,7 @@
-import { ChevronDown, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import type { ModelConfig, Orientation, ScreenBox } from "../types";
-
-export type DownloadOption = {
-  value: string;
-  label: string;
-  hint?: string;
-  onSelect: () => void;
-};
 
 type Props = {
   previewUrl: string | null;
@@ -30,7 +15,6 @@ type Props = {
   screenLandscape: ScreenBox;
   physicalScale: number;
   onDownload: () => void;
-  downloadOptions?: DownloadOption[];
 };
 
 export function PreviewCard({
@@ -45,10 +29,8 @@ export function PreviewCard({
   screenLandscape,
   physicalScale,
   onDownload,
-  downloadOptions,
 }: Props) {
   const isLandscape = orientation === "landscape";
-  const hasFormatMenu = !!downloadOptions?.length;
 
   return (
     <Card>
@@ -56,38 +38,10 @@ export function PreviewCard({
         <CardTitle className="text-lg">
           Prévia — {cfg.name} • {outW}×{outH}px
         </CardTitle>
-        {hasFormatMenu ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<Button size="sm" disabled={!previewUrl} />}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Baixar
-              <ChevronDown className="w-3.5 h-3.5 ml-1 opacity-70" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Formato do arquivo</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {downloadOptions!.map((o) => (
-                <DropdownMenuItem key={o.value} onClick={o.onSelect}>
-                  <div className="flex flex-col">
-                    <span>{o.label}</span>
-                    {o.hint && (
-                      <span className="text-xs text-muted-foreground">
-                        {o.hint}
-                      </span>
-                    )}
-                  </div>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button size="sm" onClick={onDownload} disabled={!previewUrl}>
-            <Download className="w-4 h-4 mr-2" />
-            Baixar
-          </Button>
-        )}
+        <Button size="sm" onClick={onDownload} disabled={!previewUrl}>
+          <Download className="w-4 h-4 mr-2" />
+          Baixar
+        </Button>
       </CardHeader>
       <CardContent className="space-y-4 px-0 sm:px-6">
         <div

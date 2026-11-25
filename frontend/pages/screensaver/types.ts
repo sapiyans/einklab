@@ -1,7 +1,6 @@
 export type ModelOption = "x3" | "x4" | "x4pro";
 export type Orientation = "portrait" | "landscape";
 export type DeviceColor = "black" | "white";
-export type ExportFormat = "bmp" | "png";
 
 export type ScreenBox = {
   top: number;

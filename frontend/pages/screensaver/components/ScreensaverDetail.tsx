@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import type {
-  ExportFormat,
   ModelConfig,
   Orientation,
   Screensaver,
   ScreenBox,
 } from "../types";
 import { MODELS } from "../constants";
-import { downloadBlob, imageToBmpBlob, imageToPngBlob, loadImage } from "../utils";
+import { downloadBlob, imageToBmpBlob, loadImage } from "../utils";
 import {
   COLOR_OPTIONS,
   MODEL_OPTIONS,
@@ -47,7 +46,7 @@ export function ScreensaverDetail({
     setViews(item.views);
   }, [item.id, item.downloads, item.views]);
 
-  const handleDownload = async (format: ExportFormat) => {
+  const handleDownload = async () => {
     if (isDownloading) return;
     setIsDownloading(true);
 
@@ -61,10 +60,8 @@ export function ScreensaverDetail({
 
     try {
       const img = await loadImage(srcUrl);
-      const blob =
-        format === "png" ? await imageToPngBlob(img) : imageToBmpBlob(img);
-
-      downloadBlob(blob, `${item.name || "screensaver"}.${format}`);
+      const blob = imageToBmpBlob(img);
+      downloadBlob(blob, `${item.name || "screensaver"}.bmp`);
     } catch (err) {
       console.error("Erro ao converter/baixar:", err);
       window.open(srcUrl, "_blank");
@@ -140,21 +137,7 @@ export function ScreensaverDetail({
             screen={screen}
             screenLandscape={screenLandscape}
             physicalScale={physicalScale}
-            onDownload={() => handleDownload("bmp")}
-            downloadOptions={[
-              {
-                value: "bmp",
-                label: "BMP 24-bit",
-                hint: "Firmware original Xteink",
-                onSelect: () => handleDownload("bmp"),
-              },
-              {
-                value: "png",
-                label: "PNG",
-                hint: "Overlay e forks (CrossInk)",
-                onSelect: () => handleDownload("png"),
-              },
-            ]}
+            onDownload={handleDownload}
           />
         </div>
 
