@@ -1,20 +1,33 @@
-#E-InkLab
+# E-InkLab
 
-A toolkit for E-Ink devices, starting with screensaver customization and
-firmware research for Xteink e-readers.
-Features
-- Screensavers --- Create and customize screensavers for Xteink
-  devices.
-- Firmware --- Research, documentation, and reviews of Xteink
-  firmware.
-More features coming soon.
+Toolkit para dispositivos E-Ink, começando por screensavers e pesquisa de
+firmware para leitores XTEINK.
 
-🤝 Contributing
-Contributions are welcome!
+## Serviços
 
-If you have ideas, suggestions, bug reports, or improvements related to
-screensavers and Xteink firmware, feel free to open an issue or submit a
+- **Screensavers** — galeria da comunidade e editor para criar/customizar
+  screensavers dos modelos XTEINK X3, X4 e X4 Pro (export BMP 24-bit ou PNG).
+- **Firmware** — comparativo e documentação dos firmwares XTEINK
+  (original, CrossPoint, CrossInk).
+
+## Estrutura
+
+- [`frontend/`](frontend/) — app Vike + React + Tailwind CSS v4
+- [`backend/`](backend/) — API Django + django-ninja
+- [`env/`](env/) — virtualenv Python do backend (não versionado)
+
+## Rodando localmente
+
+```sh
+# backend (http://127.0.0.1:8010)
+cd backend && ../env/bin/python manage.py migrate && ../env/bin/python manage.py runserver 127.0.0.1:8010
+
+# frontend (http://localhost:3000)
+cd frontend && npm install && npm run dev
+```
+
+## Contribuindo
+
+Contribuições são bem-vindas! Se tiver ideias, sugestões, bugs ou melhorias
+relacionadas a screensavers e firmware XTEINK, abra uma issue ou envie um
 pull request.
-
-Before contributing, please check the existing issues and discussions to
-avoid duplicated work.sz

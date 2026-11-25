@@ -58,13 +58,19 @@ CORS_ALLOWED_ORIGINS = env_list("DJANGO_CORS_ALLOWED_ORIGINS")
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party
+    'corsheaders',
+    'ninja',
+
+    # Local
+    'screensaver',
 ]
 
 MIDDLEWARE = [
@@ -103,8 +109,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': Path(os.getenv('DJANGO_DB_PATH') or BASE_DIR / 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DJANGO_DB_NAME'),
+        'USER': os.getenv('DJANGO_DB_USER'),
+        'PASSWORD': os.getenv('DJANGO_DB_PASSWORD'),
+        'HOST': os.getenv('DJANGO_DB_HOST'),
+        'PORT': os.getenv('DJANGO_DB_PORT'),
     }
 }
 
@@ -131,9 +141,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -160,3 +170,10 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# ------------------------------------------------------------------
+# API
+# ------------------------------------------------------------------
+# A API não usa barra final automática (as rotas do ninja já declaram).
+APPEND_SLASH = False

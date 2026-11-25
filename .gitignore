@@ -4,7 +4,9 @@
 !.env.*.example
 env
 __pycache__
-*.sqlite3
 
 # VSCode
 .vscode/
+# Uploads / coletados do backend
+backend/media/
+backend/staticfiles/
