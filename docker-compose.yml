@@ -1,0 +1,41 @@
+services:
+  einklab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: einklab:latest
+    pull_policy: build
+    container_name: einklab
+    restart: unless-stopped
+    init: true
+
+    mem_limit: 384m
+    cpus: 1.0
+
+    env_file:
+      - /opt/docker/einklab/app/backend/.env.prod
+
+    volumes:
+      - /opt/docker/einklab/app/backend/.env.prod:/app/backend/.env.prod:ro
+      - /opt/docker/einklab/media:/app/backend/media
+
+    networks:
+      - proxy
+      - database
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.einklab.rule=Host(`sapiensin.com`) || Host(`www.sapiensin.com`) || Host(`api.sapiensin.com`) || Host(`screensaver.sapiensin.com`) || Host(`firmware.sapiensin.com`) || Host(`xteink.sapiensin.com`)"
+      - "traefik.http.routers.einklab.entrypoints=websecure"
+      - "traefik.http.routers.einklab.tls=true"
+      - "traefik.http.routers.einklab.tls.certresolver=le"
+      - "traefik.http.routers.einklab.tls.domains[0].main=sapiensin.com"
+      - "traefik.http.routers.einklab.tls.domains[0].sans=www.sapiensin.com,api.sapiensin.com,screensaver.sapiensin.com,firmware.sapiensin.com,xteink.sapiensin.com"
+      - "traefik.http.services.einklab.loadbalancer.server.port=8000"
+
+networks:
+  proxy:
+    external: true
+  database:
+    external: true
