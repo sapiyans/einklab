@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { isSection, type Section } from "./sections";
 
@@ -21,14 +22,16 @@ export const links = {
 
 export function useLinks() {
   const pageContext = usePageContext();
-  const isServer = typeof window === "undefined";
-  const headers = (pageContext as { headers?: Record<string, string> }).headers;
+  // O HTML é pré-renderizado sem host; o React não corrige href durante a
+  // hidratação, então o host só entra depois de montar no navegador.
+  const [host, setHost] = useState("");
+  const [protocol, setProtocol] = useState("");
+  useEffect(() => {
+    setHost(window.location.host.toLowerCase());
+    setProtocol(window.location.protocol);
+  }, []);
 
-  const host = (isServer ? headers?.host ?? "" : window.location.host).toLowerCase();
-  const protocol = isServer
-    ? `${headers?.["x-forwarded-proto"] ?? "http"}:`
-    : window.location.protocol;
-  const pathname = isServer ? pageContext.urlPathname : window.location.pathname;
+  const pathname = pageContext.urlPathname;
 
   const [hostname, port] = host.split(":");
   const fromHost = hostname.split(".")[0];
@@ -36,7 +39,7 @@ export function useLinks() {
   const hostSection = isSection(fromHost) ? fromHost : null;
   const current: Section | null = hostSection ?? (isSection(fromPath) ? fromPath : null);
 
-  const domain = hostSection ? hostname.slice(hostSection.length + 1) : hostname;
+  const domain = (hostSection ? hostname.slice(hostSection.length + 1) : hostname).replace(/^www\./, "");
 
   const href = (section: Section, path: string) => {
     if (current === section) return path;
