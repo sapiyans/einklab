@@ -116,7 +116,7 @@ export default function Page() {
 
   const openEditorFromScreensaver = async (screensaver: Screensaver) => {
   // Usa o ORIGINAL se existir, senão o file final
-  const caminho = screensaver.original_file || screensaver.file;
+  const caminho = screensaver.original_file || screensaver.crop;
   if (!caminho) {
     console.error("Screensaver sem arquivo pra editar");
     return;

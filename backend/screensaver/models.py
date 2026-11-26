@@ -25,10 +25,10 @@ class Screensaver(models.Model):
 
         
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    file = models.FileField(
+    crop = models.FileField(
         upload_to="screensavers/final/%Y/",
-        verbose_name="Arquivo Final (BMP)",
-        help_text="Arquivo processado do screensaver em BMP 24-bit"
+        verbose_name="Recorte (PNG)",
+        help_text="Recorte final do screensaver em PNG — o BMP é gerado no navegador no download"
     )
     original_file = models.FileField(
         upload_to="screensavers/originals/%Y/",
@@ -62,8 +62,8 @@ class Screensaver(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if self.file and not self.thumbnail:
-            img = Image.open(self.file.path)
+        if self.crop and not self.thumbnail:
+            img = Image.open(self.crop.path)
             img.thumbnail((300, 400))
             buffer = BytesIO()
             img.save(buffer, format="WEBP", quality=75)

@@ -516,8 +516,8 @@ export function ScreensaverGallery({
             >
               <div className="relative aspect-3/4 overflow-hidden rounded-xl bg-muted ring-1 ring-border/60 transition-all duration-300 group-hover:ring-2 group-hover:ring-primary/70 group-hover:shadow-lg group-focus-visible:ring-2 group-focus-visible:ring-primary group-focus-visible:ring-offset-2 cursor-pointer">
                 <GalleryImage
-                  src={links.base + (item.thumbnail ?? item.file)}
-                  fallbackSrc={links.base + item.file}
+                  src={links.base + (item.thumbnail ?? item.crop)}
+                  fallbackSrc={links.base + item.crop}
                   alt=""
                 />
 

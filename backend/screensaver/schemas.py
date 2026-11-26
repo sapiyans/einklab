@@ -14,7 +14,7 @@ class ScreensaverOut(ModelSchema):
 
     @staticmethod
     def resolve_url(obj, context):
-        return context["request"].build_absolute_uri(obj.file.url)
+        return context["request"].build_absolute_uri(obj.crop.url)
 
     @staticmethod
     def resolve_preview_url(obj, context):

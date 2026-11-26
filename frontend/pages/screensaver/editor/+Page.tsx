@@ -250,8 +250,8 @@ export default function Page() {
     e.target.value = "";
   };
 
-  // Mantido para o usuário baixar em formato BMP
-  const buildBmpBlob = (): Blob | null => {
+  // Canvas do recorte final, já com os ajustes aplicados
+  const buildCropCanvas = useCallback((): HTMLCanvasElement | null => {
     const img = imgRef.current;
     if (!img || !completedCrop?.width || !completedCrop?.height) return null;
     const scaleX = img.naturalWidth / img.width;
@@ -272,8 +272,22 @@ export default function Page() {
       completedCrop.height * scaleY,
       0, 0, outW, outH
     );
-    return canvasToBmp24Bit(canvas);
+    return canvas;
+  }, [completedCrop, adj, outW, outH]);
+
+  // Mantido para o usuário baixar em formato BMP
+  const buildBmpBlob = (): Blob | null => {
+    const canvas = buildCropCanvas();
+    return canvas ? canvasToBmp24Bit(canvas) : null;
   };
+
+  // Recorte vai para o servidor em PNG; o BMP é gerado no navegador no download
+  const buildCropBlob = (): Promise<Blob | null> =>
+    new Promise((resolve) => {
+      const canvas = buildCropCanvas();
+      if (!canvas) return resolve(null);
+      canvas.toBlob((blob) => resolve(blob), "image/png");
+    });
 
   // Função para pegar o blob original (do upload ou cache da imagem store)
   const getOriginalBlob = async (): Promise<Blob | null> => {
@@ -292,28 +306,10 @@ export default function Page() {
   };
 
   const generatePreview = useCallback(() => {
-    const img = imgRef.current;
-    if (!img || !completedCrop?.width || !completedCrop?.height) return;
-    const scaleX = img.naturalWidth / img.width;
-    const scaleY = img.naturalHeight / img.height;
-    const canvas = document.createElement("canvas");
-    canvas.width = outW;
-    canvas.height = outH;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
-    ctx.filter = buildFilter(adj);
-    ctx.drawImage(
-      img,
-      completedCrop.x * scaleX,
-      completedCrop.y * scaleY,
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY,
-      0, 0, outW, outH
-    );
+    const canvas = buildCropCanvas();
+    if (!canvas) return;
     setPreviewUrl(canvas.toDataURL("image/png"));
-  }, [completedCrop, adj, outW, outH]);
+  }, [buildCropCanvas]);
 
   useEffect(() => {
     const t = setTimeout(generatePreview, 200);
@@ -328,17 +324,17 @@ export default function Page() {
 
   const handleDownloadClick = () => setPublishOpen(true);
 
-  // Publish: envia o BMP final e o arquivo original
+  // Publish: envia o PNG do recorte e o arquivo original
   const handlePublish = async (meta: ScreensaverMeta): Promise<Screensaver | null> => {
-    const finalBlob = buildBmpBlob();
+    const cropBlob = await buildCropBlob();
     const originalBlob = await getOriginalBlob();
 
-    if (!finalBlob || !originalBlob) {
+    if (!cropBlob || !originalBlob) {
       console.error("Imagens não estão prontas para publicação.");
       return null;
     }
 
-    return publish(finalBlob, originalBlob, meta, { model, color: deviceColor, orientation });
+    return publish(cropBlob, originalBlob, meta, { model, color: deviceColor, orientation });
   };
 
   const handleReset = () => {

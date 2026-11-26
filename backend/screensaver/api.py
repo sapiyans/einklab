@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from ninja import File, Form, Router
 from ninja.files import UploadedFile
 from ninja.pagination import PageNumberPagination, paginate
+from PIL import Image, UnidentifiedImageError
 
 from .models import Screensaver
 from .schemas import ErrorOut, ScreensaverOut
@@ -18,10 +19,25 @@ MAX_TAGS = 12
 MAX_TAG_LEN = 20
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 
+CROP_EXTENSIONS = {"PNG": ".png", "JPEG": ".jpg", "WEBP": ".webp"}
+
 VALID_DEVICES = {c.value for c in Screensaver.Device}
 VALID_MODELS = {c.value for c in Screensaver.ModelName}
 VALID_COLORS = {c.value for c in Screensaver.Color}
 VALID_ORIENTATIONS = {c.value for c in Screensaver.Orientation}
+
+
+def _crop_extension(upload: UploadedFile) -> str | None:
+    """Extensão do recorte a partir do formato real; None se não for imagem aceita."""
+    upload.seek(0)
+    try:
+        with Image.open(upload) as img:
+            fmt = img.format
+    except (UnidentifiedImageError, OSError):
+        return None
+    finally:
+        upload.seek(0)
+    return CROP_EXTENSIONS.get(fmt)
 
 
 def _validate(name, author, description, tags, devices, model_name, color, orientation):
@@ -109,7 +125,7 @@ def list_screensavers(
 )
 def create_screensaver(
     request,
-    file: UploadedFile = File(...),
+    crop: UploadedFile = File(...),
     original_file: UploadedFile = File(...),
     name: str = Form(...),
     author: str = Form(""),
@@ -120,8 +136,14 @@ def create_screensaver(
     color: str = Form(...),
     orientation: str = Form(...),
 ):
-    if file.size > MAX_FILE_SIZE or original_file.size > MAX_FILE_SIZE:
+    if crop.size > MAX_FILE_SIZE or original_file.size > MAX_FILE_SIZE:
         return 400, {"detail": f"Arquivo maior que {MAX_FILE_SIZE // (1024*1024)}MB"}
+
+    crop_ext = _crop_extension(crop)
+    if crop_ext is None:
+        return 400, {
+            "detail": "Recorte inválido: envie PNG ou JPEG — o BMP é gerado no navegador no download"
+        }
 
     tag_list = [t.strip().lower() for t in tags.split(",") if t.strip()]
 
@@ -145,7 +167,7 @@ def create_screensaver(
         )
         ss.save()
 
-        ss.file.save(f"{ss.id}.bmp", file, save=False)
+        ss.crop.save(f"{ss.id}{crop_ext}", crop, save=False)
 
         orig_ext = original_file.name.rsplit(".", 1)[-1].lower() if "." in original_file.name else "png"
         ss.original_file.save(f"{ss.id}_original.{orig_ext}", original_file, save=False)

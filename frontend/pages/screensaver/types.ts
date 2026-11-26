@@ -51,7 +51,7 @@ export type ScreensaverMeta = {
 };
 export type Screensaver = {
   id: string;
-  file: string;
+  crop: string;
   original_file: string | null;
   thumbnail: string | null;
   name: string;

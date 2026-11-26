@@ -56,7 +56,7 @@ export function ScreensaverDetail({
     });
 
     // mesma URL que o PreviewCard usa e que já carrega na tela
-    const srcUrl = `${links.base}${item.file}`;
+    const srcUrl = `${links.base}${item.crop}`;
 
     try {
       const img = await loadImage(srcUrl);
@@ -127,7 +127,7 @@ export function ScreensaverDetail({
       >
         <div className={isLandscape ? "md:col-span-2" : ""}>
           <PreviewCard
-            previewUrl={links.base + item.file}
+            previewUrl={links.base + item.crop}
             cfg={cfg}
             outW={outW}
             outH={outH}
