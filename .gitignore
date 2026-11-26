@@ -10,3 +10,6 @@ __pycache__
 # Uploads / coletados do backend
 backend/media/
 backend/staticfiles/
+
+# Backups do script de sincronização
+backups/
